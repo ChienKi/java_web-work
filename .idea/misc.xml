@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/http_socket" />
+    <file type="web" url="file://$PROJECT_DIR$/servlet-demo" />
+    <file type="web" url="file://$PROJECT_DIR$/servlet_demo" />
     <file type="web" url="file://$PROJECT_DIR$/tomcat-demo1" />
     <file type="web" url="file://$PROJECT_DIR$/../workspace/tomcat-demo1" />
   </component>
@@ -9,6 +13,8 @@
       <list>
         <option value="$PROJECT_DIR$/../workspace/tomcat-demo1/pom.xml" />
         <option value="$PROJECT_DIR$/tomcat-demo1/pom.xml" />
+        <option value="$PROJECT_DIR$/servlet-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/http_socket/pom.xml" />
       </list>
     </option>
   </component>

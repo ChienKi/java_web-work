@@ -1,5 +1,10 @@
 # 关于项目构建
 
+## maven 本身的配置
+
+设置->构建执行部署->构建工具
+![](.readme_images/maven配置.png)
+
 project structure -> 新建或者导入
 
 ![](.readme_images/d9a81bd7.png)
