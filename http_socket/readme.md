@@ -10,7 +10,7 @@
 
 - 第1种：HttpURLConnection、
 - 第2种：URLConnection、
-- 第3种：HttpClient、
+- 第3种：HttpClient_Closeable、
   - HttpClient常用HttpGet和HttpPost这两个类，分别对应Get方式和Post方式。
     使用DefaultHttpClient类的execute方法发送HttpGet和HttpPost这两个类的请求，并返回HttpResponse对象
   - 需要依赖于三个jar包，
@@ -222,7 +222,12 @@ String html = EntityUtils.toString(response.getEntity(), "GBK");
 
 好吧也许读取下来的数据本身有问题，与我无关，我改成gbk就对了
 
-## 3 正则表达式
+## 3 文本处理
+
+### 3.1 正则表达式
+
+> https://blog.csdn.net/Ramer42/article/details/83443688
+> 获取网页html并得到其中的超链接列表
 
 ```html
 如：<img src="test.jpg" width="60px" height="80px"/>
@@ -240,3 +245,40 @@ src=".*?"
 .表示除\n之外的任意字符
 *表示匹配0-无穷
 ```
+
+### 3.2 java正则匹配
+
+Pattern类的作用在于编译正则表达式后创建一个匹配模式。
+
+Matcher类使用Pattern实例提供的模式信息对正则表达式进行匹配。
+
+### 3.3不同网页不同换行符
+
+> [用换行符分割 Java 字符串](https://zditect.com/main-advanced/java/java-string-split-by-newline.html#:~:text=%E5%9C%A8%20Java%2011%20%E4%B8%AD%E7%94%A8%E6%8D%A2%E8%A1%8C%E7%AC%A6%E5%88%86%E5%89%B2%20%E5%AD%97%E7%AC%A6%E4%B8%B2%20Java%2011%20%E8%AE%A9%E6%8D%A2%E8%A1%8C%E7%AC%A6%E6%8B%86%E5%88%86%E5%8F%98%E5%BE%97%E9%9D%9E%E5%B8%B8%E5%AE%B9%E6%98%93%EF%BC%9A,%22Line1nLine2rLine3rnLine4%22.lines%20%28%29%3B%20%E5%9B%A0%E4%B8%BA%20lines%20%28%29%20%E5%9C%A8%E5%BA%95%E5%B1%82%E4%BD%BF%E7%94%A8%E4%BA%86%20%E2%80%9CR%E2%80%9D%20%E6%A8%A1%E5%BC%8F%EF%BC%8C%E6%89%80%E4%BB%A5%E5%AE%83%E9%80%82%E7%94%A8%E4%BA%8E%E5%90%84%E7%A7%8D%E8%A1%8C%E5%88%86%E9%9A%94%E7%AC%A6%E3%80%82)
+
+覆盖所有不同换行符的正则表达式模式将是：
+
+"\\r?\\n|\\r"
+
+Java 8 提供了一个匹配任何 Unicode 换行序列的“\R”模式，并涵盖了不同操作系统的所有换行符。
+
+因此，我们可以在 Java 8 或更高版本中使用“\R”模式代替“\\r?\\n|\\r”
+
+分解它，我们看到：
+>
+> \\n = Unix、Linux 和 macOS 模式
+> 
+> \\r\\n = Windows 环境模式
+> 
+> \\r = MacOS 9 和更早的模式
+
+接下来，让我们使用String # split方法来拆分 Java String。让我们看几个例子：
+```java
+String[] lines = "Line1\nLine2\nLine3".split("\\r?\\n|\\r");
+String[] lines = "Line1\rLine2\rLine3".split("\\r?\\n|\\r");
+String[] lines = "Line1\r\nLine2\r\nLine3".split("\\r?\\n|\\r");
+String[] lines = "Line1\r\nLine2\r\nLine3".split("\\R");
+```
+所有示例的结果行将是：
+
+["Line1", "Line2", "Line3"]

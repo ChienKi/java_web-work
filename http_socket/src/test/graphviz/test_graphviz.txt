@@ -1,0 +1,12 @@
+digraph G {
+    node [style=filled color="#C0FF3E"]
+    edge [color="sienna" fontcolor="green"]
+    "tongji.edu.cn" -> B -> C[label=a style=dashed arrowtail=diamond];
+    "tongji.edu.cn" -> D [arrowhead = box];
+    "tongji.edu.cn" -> H -> "tongji.edu.cn";
+    C -> E[label=1 style=dashed arrowtail=diamond];
+    C -> F [shape=box];
+    D -> E[label=2 style=dashed arrowtail=diamond];
+    "tongji.edu.cn" -> F[dir=none];
+    C -> G[dir=both];
+}

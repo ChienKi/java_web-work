@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="http-client_server" />
         <module name="tomcat-demo1" />
         <module name="servlet-demo" />
+        <module name="http_socket" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="http-client_server" target="1.7" />
       <module name="servlet-demo (1)" target="1.7" />
       <module name="servlet_demo" target="1.7" />
     </bytecodeTargetLevel>
