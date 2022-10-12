@@ -1,9 +1,12 @@
 package graph;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import org.junit.Test;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * 邻接链表（Adjacency List）实现的有向图
@@ -175,7 +178,7 @@ public class ListDGraph<V> implements DGraph<V>{
     @Override
     public int add(V v) {
         int index = -1;
-        if(v != null) {
+        if(v != null && !getmVList().contains(v)) {
             Utils.log("add v: %s", v);
             VE list = new VE(v);
             mVEList.add(list);
@@ -187,7 +190,7 @@ public class ListDGraph<V> implements DGraph<V>{
     @Override
     public void add(Edge<V> e) {
         if(e != null) {
-            Utils.log("add edge: %s", e);
+            Utils.log("ListDGraph add edge: %s", e);
             VE ve = getVE(e.getSource());
             if(ve != null) {
                 //若边的起点已经在列表里，则直接将其添加到对应的顶点对象中
@@ -346,5 +349,47 @@ public class ListDGraph<V> implements DGraph<V>{
         }
 
         return ret;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ArrayList<V> getmVList() {
+        ArrayList<V> VList= new ArrayList<V>();
+        for (VE ve:mVEList) {
+            VList.add(ve.v);
+        }
+        return VList;
+    }
+
+    @Test
+    public void graphviz(){
+        try{
+            File file = new File("./DG.dot");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+
+            String data = "\r\n This content will append to the end of the file";
+            FileWriter fileWritter = new FileWriter(file.getName(),true);
+            BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+            bufferWritter.write("digraph G {\r\n" +
+                    "    node [style=filled color=\"#C0FF3E\"]\r\n" +
+                    "    edge [color=\"sienna\" fontcolor=\"green\"]");
+
+            for (VE ve:mVEList) {
+                for (Edge<V> edge: ve.mEdgeList) {
+                    bufferWritter.write("\r\n   \"" + edge.getSource() +"\" -> \""+edge.getDest() + "\"");
+                }
+            }
+
+
+            bufferWritter.write("\r\n}");
+            bufferWritter.close();
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 }

@@ -9,15 +9,15 @@ public class Utils {
      * @param t
      */
     public static void log(Object t) {
-        System.out.println(t);
+        //System.out.println(t);
     }
 
     /**
      * 打印信息
-     * @param t
+     * @param format
      */
     public static void log(String format, Object... args) {
-        String str = String.format(format, args);
-        System.out.println(str);
+        //String str = String.format(format, args);
+        //System.out.println(str);
     }
 }

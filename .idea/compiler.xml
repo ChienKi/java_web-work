@@ -9,6 +9,7 @@
         <module name="tomcat-demo1" />
         <module name="servlet-demo" />
         <module name="http_socket" />
+        <module name="fileUpDownload" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

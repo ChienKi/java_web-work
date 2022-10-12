@@ -1,3 +1,5 @@
+package HttpURLConnection;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -72,8 +74,8 @@ class HtmlParser1 {
 
 public class getHtmlHref {
     public static void main(String[] arg) throws IOException {   //主方法
-        //HtmlParser1 HP = new HtmlParser1("https://news.163.com/");
-        HtmlParser1 HP = new HtmlParser1("https://www.tongji.edu.cn");
+        //HttpURLConnection.HtmlParser1 HP = new HttpURLConnection.HtmlParser1("https://news.163.com/");
+        HtmlParser1 HP = new HtmlParser1("https://www.fudan.edu.cn");
 
         ArrayList<String> hrefList = HP.parser();
         for (int i = 0; i < hrefList.size(); i++)

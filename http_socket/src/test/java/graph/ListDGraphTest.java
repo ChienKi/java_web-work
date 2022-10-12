@@ -30,6 +30,7 @@ public class ListDGraphTest {
         mDG.add("6");
         mDG.add("7");
         mDG.add("8");
+        mDG.add("2");
 
         Utils.log("===============add edge=================");
 

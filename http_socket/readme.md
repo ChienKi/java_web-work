@@ -10,7 +10,7 @@
 
 - 第1种：HttpURLConnection、
 - 第2种：URLConnection、
-- 第3种：HttpClient_Closeable、
+- 第3种：CloseableHttpResponse.HttpClient_Closeable、
   - HttpClient常用HttpGet和HttpPost这两个类，分别对应Get方式和Post方式。
     使用DefaultHttpClient类的execute方法发送HttpGet和HttpPost这两个类的请求，并返回HttpResponse对象
   - 需要依赖于三个jar包，
@@ -108,7 +108,34 @@ Avg Conn Time       0.00ms
 
 ## 2 Client端
 
-### 2.1 呃，老师给的，其实我不太懂，只是跑通了
+### 2.2 Java实现用CloseableHttpClient来获取网页内容
+
+这次我构建了maven，因为要引入依赖（maven会引入了，别的方法已经有点忘了，我已经是没有maven就不会活的废物了
+
+> https://blog.csdn.net/guihua55/article/details/108951768
+
+使用CloseableHttpClient，爬取网页html内容，非常简单
+
+```java
+String html = EntityUtils.toString(response.getEntity(), "GBK");
+```
+获得的html是\r\n为换行符的整个html的字符串
+![](.readme_images/html字符串.png)
+
+
+就不自己写了，看这个就ok
+
+### 2.3 socket与中文乱码
+
+我以为我都设置成了utf_8呀，为啥有问题
+
+好吧也许读取下来的数据本身有问题，与我无关，我改成gbk就对了
+
+### 2.4 对CloseableHttpClient的工具类HttpUtils
+
+> [用于httpclient的工具类](https://juejin.cn/post/6844903891318865928)
+
+### 2.x 呃，老师给的，其实我不太懂，只是跑通了
 运行tomcat_servlet项目, index.jsp部署在localhost:8081/servlet_demo/
 ![](.readme_images/servlet部署.png)
 代码如下，注意deGet中的localhost，port，page的调用
@@ -198,29 +225,6 @@ Connection: keep-alive
 </body>
 </html>
 ```
-
-### 2.2 Java实现用HttpClient来获取网页内容
-
-这次我构建了maven，因为要引入依赖（maven会引入了，别的方法已经有点忘了，我已经是没有maven就不会活的废物了
-
-> https://blog.csdn.net/guihua55/article/details/108951768
-
-使用CloseableHttpClient，爬取网页html内容，非常简单
-
-```java
-String html = EntityUtils.toString(response.getEntity(), "GBK");
-```
-获得的html是\r\n为换行符的整个html的字符串
-![](.readme_images/html字符串.png)
-
-
-就不自己写了，看这个就ok
-
-### 2.3 socket与中文乱码
-
-我以为我都设置成了utf_8呀，为啥有问题
-
-好吧也许读取下来的数据本身有问题，与我无关，我改成gbk就对了
 
 ## 3 文本处理
 

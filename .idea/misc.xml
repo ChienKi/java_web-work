@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/tomcat-demo1/pom.xml" />
         <option value="$PROJECT_DIR$/servlet-demo/pom.xml" />
         <option value="$PROJECT_DIR$/http_socket/pom.xml" />
+        <option value="$PROJECT_DIR$/../fileUpDownload/pom.xml" />
       </list>
     </option>
   </component>
