@@ -10,6 +10,9 @@ public class file_trans {
     //OutputStream可以被FileOutputStream覆盖;
     OutputStream os;
 
+    String outputPath;
+    public String getOutputPath(){return this.outputPath;}
+
     /**
      * 从InputStream输出到OutputStream
      * @param is
@@ -39,8 +42,8 @@ public class file_trans {
             is = socket.getInputStream();  //获取socket对象的输入流
             //以下两行用于接收文件的名字
             String fileName = new DataInputStream(is).readUTF();
-            String outputPath = outputDir + fileName;
-            os = new FileOutputStream(outputPath);  //本地输出文件 OutputStream可以被FileOutputStream覆盖;
+            this.outputPath = outputDir + fileName;
+            os = new FileOutputStream(this.outputPath);  //本地输出文件 OutputStream可以被FileOutputStream覆盖;
 
             InputStream_to_OutputStream(is,os);
 

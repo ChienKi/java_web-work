@@ -16,15 +16,18 @@ public class myServers{
      * ServerName: Server0 ... Serveri
      * port: 8080 ... 8080+i
      */
-    Server[] ServerList;
+    Server[] serverList;
     server_meta[] server_metas;
     public myServers(int ServerNum){
         this.serverNum =ServerNum;
-        this.ServerList = new Server[ServerNum];
+        this.serverList = new Server[ServerNum];
         this.server_metas = new server_meta[ServerNum];
         for(int i=0; i<ServerNum; i++){
             server_metas[i]=new server_meta(i);
-            ServerList[i]=new Server(server_metas[i]);
+            //在这里会阻塞住嘛？？？
+            Thread t = new Server(server_metas[i]);
+            t.start();
+            //serverList[i]= (Server) t;
         }
     }
 
@@ -55,7 +58,7 @@ class server_meta {
         this.port=8080+serverIndex;
     }
 }
-class Server{
+class Server extends Thread{
     String serverName;
     int serverIndex;
     private int port = 8080;
@@ -64,14 +67,18 @@ class Server{
         this.serverIndex=ms.serverIndex;
         this.serverName =ms.serverName;
         this.port=ms.port;
+
+    }
+    public void run(){
         try {
             //1-初始化
             server_socket = new ServerSocket(port);   // 创建消息传输服务器
+            System.out.println("server is running on port:"+port);
 
             //2-每次接收一个客户端请求连接时都启用一个线程处理
             while(true) {
                 Socket client_socket = server_socket.accept(); //此处会阻塞，直到接收一个客户端连接请求
-                System.out.println("connected from " + client_socket.getRemoteSocketAddress());
+                System.out.println(serverName+" connected from " + client_socket.getRemoteSocketAddress());
                 Thread t = new ServerThread(serverName, client_socket);
                 t.start();
             }
@@ -85,7 +92,6 @@ class Server{
  */
 class ServerThread extends Thread{
     String ServerName;
-    //TODO: make the class to be a thread for filetrans？
     private final Socket client_socket;
     public ServerThread(String ServerName, Socket client_socket) {
         this.ServerName=ServerName;
@@ -93,7 +99,7 @@ class ServerThread extends Thread{
     }
 
     public void run() {
-        downloadSplitFile();
+        downloadSplitFiles();
         //TODO:接收文件名
         //String fileName = socket_reader(client_socket);
         //String fileName = "file.png";
@@ -117,9 +123,16 @@ class ServerThread extends Thread{
     /**
      *
      */
-    public void downloadSplitFile(){
+    public void downloadSplitFiles(){
         String outputDir=".\\fileUpDownload\\out\\"+ServerName+"\\";
-        new file_trans(client_socket,outputDir);
+        //获取客户端上传的hashmap, 从中获取文件名
+        file_trans file_download = new file_trans(client_socket, outputDir);
+        //fileMapTable file_map = fileMapTable.deserialize(file_download.getOutputPath());
+        //System.out.println("filename:"+file_map.fileName);
+
+        //建立输出路径
+        //outputDir = outputDir+file_map.fileName+"\\";  //分块的文件要存在这个文件名为名的目录下面
+
     }
     public void upload(String fileName){
         new file_trans(".\\fileUpDownload\\out\\" + ServerName + "\\" + fileName, client_socket);

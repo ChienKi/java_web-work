@@ -5,7 +5,7 @@ import java.net.Socket;
 public class myClient {
     public static void upload(String path){	//filename为文件名，上传到服务器建议文件名采用时间加随机字符的格式
         try{
-            Socket socket = new Socket("127.0.0.1",8888);
+            Socket socket = new Socket("127.0.0.1",8081);
             new file_trans(path, socket);
         }catch(Exception e){
             e.printStackTrace(System.out);
