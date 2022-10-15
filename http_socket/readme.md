@@ -181,7 +181,7 @@ public class HTTPClient {
             // Open a Socket
             serviceSocket = new Socket(webServer, port);
             if (serviceSocket != null) {
-                // transfer message with socket
+                // transfer message with socket_example
                 out = new PrintWriter(serviceSocket.getOutputStream());
                 out.println(httpRequest);
                 out.flush();
